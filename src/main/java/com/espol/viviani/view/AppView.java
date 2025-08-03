@@ -10,11 +10,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class AppView extends JFrame {
+    private JTextField txfRadius;
+    private JTextField txfSubIntervals;
+    private JButton buttonCalculatePerimeter;
+    private JLabel resultLb;
+
     public AppView() {
         // propiedades de la ventana JFrame
         setTitle("Ventana de viviani");
@@ -38,16 +42,16 @@ public class AppView extends JFrame {
             centerPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
 
                 JLabel lbRadius = new JLabel("Radio (cm):");
-                JTextField txfRadius = new JTextField();
+                txfRadius = new JTextField();
                 txfRadius.setMaximumSize(new Dimension(txfRadius.getMaximumSize().width, 35));
                 
                 JLabel lbSubIntervals = new JLabel("Cantidad de sub-intervalos:");
-                JTextField txfSubIntervals = new JTextField();
+                txfSubIntervals = new JTextField();
                 txfSubIntervals.setMaximumSize(new Dimension(txfSubIntervals.getMaximumSize().width, 35));
                 
-                JButton buttonCalculatePerimeter = new JButton("Calcular perímetro");
+                buttonCalculatePerimeter = new JButton("Calcular perímetro");
 
-                JLabel resultLb = new JLabel("Resultado: " + 0.00);
+                resultLb = new JLabel("Resultado: 0.00000 cm");
 
             centerPanel.add(lbRadius);
             centerPanel.add(txfRadius);
@@ -67,5 +71,21 @@ public class AppView extends JFrame {
         mainPanel.add(rightPanel, BorderLayout.EAST);
 
         this.add(mainPanel);
+    }
+
+    public JTextField getTxfRadius() {
+        return txfRadius;
+    }
+
+    public JTextField getTxfSubIntervals() {
+        return txfSubIntervals;
+    }
+
+    public JButton getButtonCalculatePerimeter() {
+        return buttonCalculatePerimeter;
+    }
+
+    public JLabel getResultLb() {
+        return resultLb;
     }
 }
