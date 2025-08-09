@@ -3,10 +3,12 @@ package com.espol.viviani.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,94 +17,139 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class AppView extends JFrame {
-    private JTextField txfRadius;
-    private JTextField txfSubIntervals;
-    private JButton buttonCalculatePerimeter;
-    private JLabel resultLb;
+    private final Color COLOR_BLACK = new Color(0, 0, 0);
+    private final Color COLOR_WHITE = new Color(255, 255, 255);
+
+    private JTextField radiusField;
+    private JTextField subIntervalsField;
+    private JButton calculateButton;
+    private JLabel result;
 
     public AppView() {
-        // propiedades de la ventana JFrame
-        setTitle("Ventana de viviani");
-        setSize(new Dimension(500, 360));
+        configureWindow();
+        initializeComponents();
+        setVisible(true);
+    }
+
+    // establece las propiedades de la ventana
+    private void configureWindow() {
+        setTitle("Ventana de Viviani");
+        setSize(560,380);
         setResizable(false);
-        // setMinimumSize(new Dimension(500, 360));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        init();
     }
 
     // inicializa los componentes
-    private void init() {
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBorder(new EmptyBorder(10, 30, 10, 30));
-        mainPanel.setBackground(new Color(255, 255, 255));
-
-            // panel superior
-            JPanel topPanel = new JPanel();
-            topPanel.setBackground(new Color(255, 255, 255));
-
-                JLabel lb1 = new JLabel("Aproximar perímetro de la curva de la Ventana de Viviani");
-                lb1.setForeground(new Color(0, 0, 0));
-                lb1.setFont(new Font("Dialog", Font.BOLD, 14));
-
-            topPanel.add(lb1);
-            
-            // panel que contiene las entradas de datos y que muestra la salida.
-            JPanel centerPanel = new JPanel();
-            centerPanel.setBackground(new Color(255, 255, 255));
-            centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-
-                JLabel lbRadius = new JLabel("Radio (cm):");
-                lbRadius.setForeground(new Color(0, 0, 0));
-
-                txfRadius = new JTextField();
-                txfRadius.setMaximumSize(new Dimension(txfRadius.getMaximumSize().width, 35));
-                
-                JLabel lbSubIntervals = new JLabel("Cantidad de sub-intervalos:");
-                lbSubIntervals.setForeground(new Color(0, 0, 0));
-
-                txfSubIntervals = new JTextField();
-                txfSubIntervals.setMaximumSize(new Dimension(txfSubIntervals.getMaximumSize().width, 35));
-                
-                buttonCalculatePerimeter = new JButton("Calcular perímetro");
-                buttonCalculatePerimeter.setForeground(new Color(0, 0, 0));
-                buttonCalculatePerimeter.setFocusable(false);
-
-                resultLb = new JLabel("Resultado:");
-                resultLb.setForeground(new Color(0, 0, 0));
-
-            centerPanel.add(lbRadius);
-            centerPanel.add(Box.createVerticalStrut(5));
-            centerPanel.add(txfRadius);
-            centerPanel.add(Box.createVerticalStrut(20));
-            centerPanel.add(lbSubIntervals);
-            centerPanel.add(Box.createVerticalStrut(5));
-            centerPanel.add(txfSubIntervals);
-            centerPanel.add(Box.createVerticalStrut(20));
-            centerPanel.add(buttonCalculatePerimeter);
-            centerPanel.add(Box.createVerticalStrut(20));
-            centerPanel.add(resultLb);
-
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-
-        this.add(mainPanel);
+    private void initializeComponents() {
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(createTitlePanel(), BorderLayout.NORTH);
+        mainPanel.add(createInteractionPanel(), BorderLayout.CENTER);
+        mainPanel.add(createImgPanel(), BorderLayout.EAST);
+        
+        add(mainPanel);
     }
 
-    public JTextField getTxfRadius() {
-        return txfRadius;
+    // crea el panel de título
+    private JPanel createTitlePanel() {
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 8));
+        titlePanel.setBackground(COLOR_BLACK);
+
+            JLabel title = new JLabel("Curva de la Ventana de Viviani");
+            title.setForeground(COLOR_WHITE);
+            title.setFont(new Font("Dialog", Font.BOLD, 16));
+
+        titlePanel.add(title);
+
+        return titlePanel;
     }
 
-    public JTextField getTxfSubIntervals() {
-        return txfSubIntervals;
+    // crea el panel de interacción (es con el que el usuario interactúa)
+    private JPanel createInteractionPanel() {
+        JPanel interactionPanel = new JPanel(new BorderLayout());
+        interactionPanel.add(createInputPanel(), BorderLayout.CENTER);
+        interactionPanel.add(createOutputPanel(), BorderLayout.SOUTH);
+
+        return interactionPanel;
     }
 
-    public JButton getButtonCalculatePerimeter() {
-        return buttonCalculatePerimeter;
+    // crea el panel de entrada
+    private JPanel createInputPanel() {
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
+        inputPanel.setBackground(COLOR_WHITE);
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+
+        JLabel radiusLabel = new JLabel("Radio [cm]:");
+        radiusField = new JTextField();
+        radiusField.setMaximumSize(new Dimension(radiusField.getMaximumSize().width, 35));
+        
+        JLabel subIntervalsLabel = new JLabel("Cantidad de sub-intervalos: ");
+        subIntervalsField = new JTextField();
+        subIntervalsField.setMaximumSize(new Dimension(subIntervalsField.getMaximumSize().width, 35));
+
+        calculateButton = new JButton("Calcular perímetro");
+        calculateButton.setBackground(COLOR_BLACK);
+        calculateButton.setForeground(COLOR_WHITE);
+        calculateButton.setFocusable(false);
+
+        inputPanel.add(radiusLabel);
+        inputPanel.add(Box.createVerticalStrut(8));
+        inputPanel.add(radiusField);
+        inputPanel.add(Box.createVerticalStrut(16));
+        inputPanel.add(subIntervalsLabel);
+        inputPanel.add(Box.createVerticalStrut(8));
+        inputPanel.add(subIntervalsField);
+        inputPanel.add(Box.createVerticalStrut(16));
+        inputPanel.add(calculateButton);
+
+        return inputPanel;
     }
 
-    public JLabel getResultLb() {
-        return resultLb;
+    private JPanel createOutputPanel() {
+        JPanel outputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        outputPanel.setBackground(COLOR_WHITE);
+
+        result = new JLabel("Resultado:");
+        result.setForeground(COLOR_BLACK);
+        result.setFont(new Font("Dialog", Font.BOLD, 14));
+
+        outputPanel.add(result);
+
+        return outputPanel;
+    }
+
+    private JPanel createImgPanel() {
+        JPanel imgPanel = new JPanel();
+        imgPanel.setBackground(COLOR_WHITE);
+        imgPanel.setPreferredSize(new Dimension(200, imgPanel.getPreferredSize().height));
+
+        JLabel imgLabel = new JLabel();
+        try {
+            ImageIcon img = new ImageIcon(getClass().getResource("/img/viviani.png"));
+            imgLabel.setIcon(img);
+        } catch (Exception e) {
+            System.out.println("viviani.png no encontrada.");
+        }
+
+        imgPanel.add(imgLabel);
+
+        return imgPanel;
+    }
+
+    public JTextField getRadiusField() {
+        return radiusField;
+    }
+
+    public JTextField getSubIntervalsField() {
+        return subIntervalsField;
+    }
+
+    public JButton getCalculateButton() {
+        return calculateButton;
+    }
+
+    public JLabel getResult() {
+        return result;
     }
 }
