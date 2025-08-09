@@ -1,7 +1,7 @@
 package com.espol.viviani.model;
 
 public class Calculator {
-    public static double calculateRiemannSum(int n, MathFunction function) {
+    public static double calculateRiemannSum(long n, MathFunction function) {
         double sum = 0;
         double deltaX = 4.00*Math.PI/n;
 

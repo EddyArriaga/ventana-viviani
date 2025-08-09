@@ -22,12 +22,12 @@ public class AppController {
             if (InputValidator.isPositiveInteger(subIntervals) && (InputValidator.isPositiveDecimal(radius) || InputValidator.isPositiveInteger(radius))) {
                 IntegrandFunction integrandFunction = new IntegrandFunction();
 
-                double riemannSum = Calculator.calculateRiemannSum(Integer.parseInt(subIntervals), integrandFunction);
+                double riemannSum = Calculator.calculateRiemannSum(Long.parseLong(subIntervals), integrandFunction);
                 double perimeter = Calculator.calculatePerimeter(Double.parseDouble(radius), riemannSum);
 
-                appView.getResult().setText("Resultado: " + String.format("%.4f", perimeter) + " [cm]");
+                appView.getResult().setText("Resultado: " + String.format("%.6f", perimeter) + " [cm]");
             } else {
-                appView.getResult().setText("Campos no permitidos.");
+                appView.getResult().setText("Campos con caracteres no permitidos.");
             }
         } else {
             appView.getResult().setText("No se permite campos vacíos.");
